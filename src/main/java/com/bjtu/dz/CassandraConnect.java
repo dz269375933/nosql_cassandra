@@ -1,11 +1,17 @@
 package com.bjtu.dz;
 
+import com.bjtu.dz.bean.JSONClass;
+import com.bjtu.dz.bean.Movie;
+import com.bjtu.dz.bean.MovieType;
+import com.bjtu.dz.bean.UserMovieRating;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.mapping.Mapper;
+import com.datastax.driver.mapping.MappingManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +21,10 @@ public class CassandraConnect {
     private Cluster cluster;
     private Session session;
     private String keySpace="movieRating";
-    private String table="rating";
-    public CassandraConnect(){
-        try {
+    private String table="userMovieRating";
+    Mapper<UserMovieRating> mapper;
+
+    public CassandraConnect() throws Exception {
             //定义cluster类
             cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
             //需要获取session对象
@@ -25,48 +32,59 @@ public class CassandraConnect {
             this.dropTable();
             this.createTable();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
-    public void createTable(){
-        //创建键空间  防止发生错误 if not exists
+    public void createTable() throws Exception{
+        //create key space
         String createKeySpaceCQL=
                 "create keyspace if not exists " +keySpace+
                         " with "
                         + "replication={'class':'SimpleStrategy','replication_factor':3}";
         session.execute(createKeySpaceCQL);
-        //创建列族
+        //create movie type
+        String createMovieType="" +
+                "create type if not exists "+keySpace+".movieType(movie_id int,user_rating int,movie_title varchar)";
+        session.execute(createMovieType);
+
+
+        //create column family
         String createTableCQL =
-                "create table if not exists movieRating.rating(" +
+                "create table if not exists movieRating."+table+"(" +
                         "username varchar," +
-                        "movie_id int," +
-                        "movie_title varchar," +
-                        "user_rating int," +
                         "gender varchar," +
                         "age int," +
                         "occupation varchar," +
-                        "primary key((username,movie_id))" +
+                        "movie map<int,frozen<movieType>>," +
+                        "primary key(username)" +
                         ")";
         session.execute(createTableCQL);
+        mapper=new MappingManager(session).mapper(UserMovieRating.class);
     }
-    public void insert(JSONClass object){
-        //插入数据
-
-        Insert insert = QueryBuilder.insertInto(keySpace, table)
-                .value("username",object.getName())
-                .value("movie_id",object.getMovie().getId())
-                .value("movie_title",object.getMovie().getTitle())
-                .value("user_rating",object.getMovie().getRating())
-                .value("gender",object.getGender())
-                .value("age",object.getAge())
-                .value("occupation",object.getOccupation());
-
-        try{
-            session.execute(insert);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+    public void insert(JSONClass object) throws Exception{
+        UserMovieRating rating=new UserMovieRating(object);
+        mapper.save(rating);
+//        Movie movie=object.getMovie();
+//        Map map1=new HashMap();
+//        map1.put("movie_id",movie.getId());
+//        map1.put("user_rating",movie.getRating());
+//        map1.put("movie_title",movie.getTitle());
+//        MovieType movieType=new MovieType(movie);
+//
+//        Map<Integer,MovieType> movieMap=new HashMap<Integer,MovieType>();
+//        movieMap.put(movie.getId(),movieType);
+////        movieMap.put(movie.getId(),map1);
+//
+//
+//
+//
+//        Insert insert = QueryBuilder.insertInto(keySpace, table)
+//                .value("username",object.getName())
+//                .value("gender",object.getGender())
+//                .value("age",object.getAge())
+//                .value("occupation",object.getOccupation())
+//                .value("movie",movieType)
+//                ;
+//
+//        session.execute(insert);
 
     }
     public void selectAll(){
@@ -80,13 +98,9 @@ public class CassandraConnect {
                 System.out.println(row.getString(0));
             }
     }
-    public void dropTable(){
-        String CQL="drop table IF EXISTS movieRating.rating";
-        try{
-            session.execute(CQL);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+    public void dropTable() throws Exception{
+        String CQL="drop table IF EXISTS movieRating.userMovieRating";
+        session.execute(CQL);
     }
     public void exit(){
         session.close();

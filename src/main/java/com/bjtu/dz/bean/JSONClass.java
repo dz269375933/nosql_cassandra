@@ -1,4 +1,4 @@
-package com.bjtu.dz;
+package com.bjtu.dz.bean;
 
 import java.util.Map;
 

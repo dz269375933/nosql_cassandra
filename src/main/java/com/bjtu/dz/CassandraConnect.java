@@ -1,20 +1,12 @@
 package com.bjtu.dz;
 
-import com.bjtu.dz.bean.JSONClass;
-import com.bjtu.dz.bean.Movie;
-import com.bjtu.dz.bean.MovieType;
-import com.bjtu.dz.bean.UserMovieRating;
+import com.bjtu.dz.bean.*;
 import com.datastax.driver.core.*;
-import com.datastax.driver.core.querybuilder.Insert;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-import com.datastax.driver.core.querybuilder.Update;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CassandraConnect {
     private Cluster cluster;
@@ -22,17 +14,18 @@ public class CassandraConnect {
     private String keySpace="movieRating";
     private String table="userMovieRating";
     Mapper<UserMovieRating> mapper;
+    Mapper<MovieUserRating> movieMapper;
+    MovieUserRating movieUserRating;
+    UserMovieRating rating;
 
     public CassandraConnect() throws Exception {
             //定义cluster类
             cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
             //需要获取session对象
             session = cluster.connect();
-            this.dropTable();
-            this.createTable();
 
     }
-    public void createTable() throws Exception{
+    public void createTableUserMovie() throws Exception{
         //create key space
         String createKeySpaceCQL=
                 "create keyspace if not exists " +keySpace+
@@ -58,10 +51,52 @@ public class CassandraConnect {
         session.execute(createTableCQL);
         mapper=new MappingManager(session).mapper(UserMovieRating.class);
     }
+
+    public void createTableMovieUser() throws Exception{
+        //create key space
+        String createKeySpaceCQL=
+                "create keyspace if not exists " +keySpace+
+                        " with "
+                        + "replication={'class':'SimpleStrategy','replication_factor':3}";
+        session.execute(createKeySpaceCQL);
+        //create movie type
+        String createUserType="" +
+                "create type if not exists "+keySpace+".userType(userName varchar,user_rating int,gender varchar," +
+                "occupation varchar,age int)";
+        session.execute(createUserType);
+
+
+        //create column family
+        String createTableCQL =
+                "create table if not exists movieRating.movieUserRating(" +
+                        "movie_id int," +
+                        "movie_title varchar," +
+                        "user List<frozen<userType>>," +
+                        "primary key(movie_id)" +
+                        ")";
+        session.execute(createTableCQL);
+        movieMapper=new MappingManager(session).mapper(MovieUserRating.class);
+    }
+    public void insertMovie(MovieTemp object) throws Exception{
+        movieUserRating=new MovieUserRating(object);
+        movieMapper.save(movieUserRating);
+    }
+    public void updateMovie(MovieTemp movieTemp) throws Exception{
+        int movie_id=movieTemp.getMovieId();
+        List<User> userList=new ArrayList<User>();
+        userList.add(new User(movieTemp));
+        BoundStatement  boundStatement =
+                session.prepare("update movieRating.movieUserRating set user = user +" +
+                        "? where movie_id = "+movie_id)
+                        .bind(userList);
+        session.execute(boundStatement);
+    }
+
+
     public void insert(JSONClass object) throws Exception{
-        UserMovieRating rating=new UserMovieRating(object);
+        rating=new UserMovieRating(object);
         mapper.save(rating);
-//        Movie movie=object.getMovie();
+//        Movie movie=object.getMovieData();
 //        Map map1=new HashMap();
 //        map1.put("movie_id",movie.getId());
 //        map1.put("user_rating",movie.getRating());
@@ -107,8 +142,12 @@ public class CassandraConnect {
                 System.out.println(row.getString(0));
             }
     }
-    public void dropTable() throws Exception{
+    public void dropTableUserMovie() throws Exception{
         String CQL="drop table IF EXISTS movieRating.userMovieRating";
+        session.execute(CQL);
+    }
+    public void dropTableMovieUser() throws Exception{
+        String CQL="drop table IF EXISTS movieRating.movieUserRating";
         session.execute(CQL);
     }
     public void exit(){

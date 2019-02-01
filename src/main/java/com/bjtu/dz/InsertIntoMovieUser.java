@@ -1,15 +1,16 @@
 package com.bjtu.dz;
 
 import com.bjtu.dz.bean.JSONClass;
+import com.bjtu.dz.bean.MovieTemp;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.io.*;
 
-public class ReadData {
+public class InsertIntoMovieUser {
     public static void main(String[] arg){
-        String path="C:\\Users\\dz\\Desktop\\MovieLens_ratingUsers.json\\MovieLens_ratingUsers.json";
-        String errorPath="C:\\Users\\dz\\Desktop\\MovieLens_ratingUsers.json\\error.txt";
+        String path="movieUser2.csv";
+        String errorPath="error.txt";
         try {
             BufferedReader br=new BufferedReader(
                     new InputStreamReader(new FileInputStream(new File(path)),"UTF-8")
@@ -17,32 +18,34 @@ public class ReadData {
             String lineTxt = null;
 
             CassandraConnect cc=new CassandraConnect();
+            cc.dropTableMovieUser();
+            cc.createTableMovieUser();
 
             float count=0;
-            String lastUser="";
+            int lastMovie=-1;
+            boolean flag=true;
+
             while ((lineTxt = br.readLine()) != null) {
-                JSONClass jClass=null;
-                try {
-                    System.out.println((count++/10002)+"%");
-                    JSONObject jsonObject=JSONObject.fromObject(lineTxt);
-                    jClass=(JSONClass)JSONObject.toBean(jsonObject, JSONClass.class);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                    ErrorSave.save(errorPath,count,"JSONException");
-                }
-
+                MovieTemp movieTemp=null;
+                System.out.println((count++)/10002+"%");
+                movieTemp=StringUtil.StringToMovieTemp(lineTxt);
 
                 try {
-                    if(lastUser==null || lastUser.equals("")){
-                        lastUser=jClass.getName();
-                        cc.insert(jClass);
+                    if(flag){
+                        flag=false;
+                        lastMovie=movieTemp.getMovieId();
+                        cc.insertMovie(movieTemp);
+                        continue;
+                    }
+                    if(lastMovie!=movieTemp.getMovieId()){
+                        lastMovie=movieTemp.getMovieId();
+                        cc.insertMovie(movieTemp);
                     }else{
-                        cc.update(jClass);
+                        cc.updateMovie(movieTemp);
                     }
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    System.exit(0);
                     ErrorSave.save(errorPath,count,"cassandraError");
                 }
             }

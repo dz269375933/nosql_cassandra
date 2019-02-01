@@ -1,6 +1,5 @@
 package com.bjtu.dz.bean;
 
-import com.bjtu.dz.bean.Movie;
 import com.datastax.driver.mapping.annotations.UDT;
 
 @UDT(keyspace = "movieRating", name = "movieType")
@@ -10,9 +9,9 @@ public class MovieType {
     String movie_title;
 
     public MovieType(Movie movie){
-        this.movie_id=movie.getId();
-        this.user_rating=movie.getRating();
-        this.movie_title=movie.getTitle();
+        this.movie_id= movie.getId();
+        this.user_rating= movie.getRating();
+        this.movie_title= movie.getTitle();
     }
     public MovieType(){}
     public MovieType(int movie_id,int user_rating,String movie_title){

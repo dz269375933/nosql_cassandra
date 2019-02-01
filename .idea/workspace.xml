@@ -4,11 +4,8 @@
     <list default="true" id="bc67bf21-8049-4284-a7f0-2c28d6a897c2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/JSONClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/JSONClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bjtu/dz/CassandraConnect.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bjtu/dz/CassandraConnect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/bjtu/dz/ReadData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/bjtu/dz/ReadData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/UserMovieRating.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/UserMovieRating.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -30,23 +27,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CassandraConnect.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CassandraConnect.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+            <state relative-caret-position="294">
+              <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3421#3432#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReadData.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Mapper.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/datastax/cassandra/cassandra-driver-mapping/3.4.0/cassandra-driver-mapping-3.4.0.jar!/com/datastax/driver/mapping/Mapper.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="5" column="35" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="38" column="13" lean-forward="true" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+            <state relative-caret-position="180">
+              <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
             </state>
           </provider>
         </entry>
@@ -54,26 +61,10 @@
       <file leaf-file-name="UserMovieRating.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/UserMovieRating.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="32" column="56" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="56" />
+            <state relative-caret-position="-49">
+              <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#90#91#0" expanded="true" />
-                <element signature="e#121#122#0" expanded="true" />
-                <element signature="e#169#170#0" expanded="true" />
-                <element signature="e#209#210#0" expanded="true" />
-                <element signature="e#242#243#0" expanded="true" />
-                <element signature="e#271#272#0" expanded="true" />
-                <element signature="e#315#316#0" expanded="true" />
-                <element signature="e#351#352#0" expanded="true" />
-                <element signature="e#378#379#0" expanded="true" />
-                <element signature="e#404#405#0" expanded="true" />
-                <element signature="e#439#440#0" expanded="true" />
-                <element signature="e#469#470#0" expanded="true" />
-                <element signature="e#506#507#0" expanded="true" />
-                <element signature="e#539#540#0" expanded="true" />
-                <element signature="e#591#592#0" expanded="true" />
-                <element signature="e#635#636#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,11 +109,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/JSONClass.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/Movie.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/ErrorSave.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/MovieType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/JSONClass.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/MovieRating.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/UserMovieRating.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java" />
       </list>
     </option>
@@ -150,6 +141,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="683" />
     <option name="height" value="728" />
   </component>
@@ -161,7 +154,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -210,6 +202,7 @@
       </pane>
       <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -307,12 +300,13 @@
       <workItem from="1548834714071" duration="9611000" />
       <workItem from="1548852451301" duration="1493000" />
       <workItem from="1548856858158" duration="3108000" />
-      <workItem from="1548971455562" duration="3063000" />
+      <workItem from="1548971455562" duration="3266000" />
+      <workItem from="1549025309097" duration="1613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22583000" />
+    <option name="totallyTimeSpent" value="24399000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -328,11 +322,11 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32843137" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27609682" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2806354" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -364,18 +358,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java</url>
-          <line>84</line>
+          <line>62</line>
           <properties />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java</url>
-          <line>78</line>
-          <properties />
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -384,17 +372,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/JSONClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#415#416#0" expanded="true" />
-            <element signature="e#442#443#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/MovieType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -418,6 +395,7 @@
           <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3421#3432#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -692,10 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="157" selection-start-line="157" selection-end-line="157" />
-          <folding>
-            <element signature="e#3829#3830#0" expanded="true" />
-            <element signature="e#3876#3877#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -741,46 +715,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/datastax/cassandra/cassandra-driver-mapping/3.4.0/cassandra-driver-mapping-3.4.0.jar!/com/datastax/driver/mapping/Mapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="5" column="35" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/bean/UserMovieRating.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="32" column="56" selection-start-line="32" selection-start-column="56" selection-end-line="32" selection-end-column="56" />
+        <state relative-caret-position="-49">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#90#91#0" expanded="true" />
-            <element signature="e#121#122#0" expanded="true" />
-            <element signature="e#169#170#0" expanded="true" />
-            <element signature="e#209#210#0" expanded="true" />
-            <element signature="e#242#243#0" expanded="true" />
-            <element signature="e#271#272#0" expanded="true" />
-            <element signature="e#315#316#0" expanded="true" />
-            <element signature="e#351#352#0" expanded="true" />
-            <element signature="e#378#379#0" expanded="true" />
-            <element signature="e#404#405#0" expanded="true" />
-            <element signature="e#439#440#0" expanded="true" />
-            <element signature="e#469#470#0" expanded="true" />
-            <element signature="e#506#507#0" expanded="true" />
-            <element signature="e#539#540#0" expanded="true" />
-            <element signature="e#591#592#0" expanded="true" />
-            <element signature="e#635#636#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/CassandraConnect.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+        <state relative-caret-position="294">
+          <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3421#3432#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjtu/dz/ReadData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="38" column="13" lean-forward="true" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
         </state>
       </provider>
     </entry>

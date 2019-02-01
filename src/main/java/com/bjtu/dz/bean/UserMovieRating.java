@@ -5,8 +5,8 @@ import com.datastax.driver.mapping.annotations.Frozen;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(keyspace = "movieRating", name = "userMovieRating")
 public class UserMovieRating {
@@ -18,19 +18,19 @@ public class UserMovieRating {
     String occupation;
 
     @Column(name = "movie")
-    Map<Integer,MovieType> movieMap;
+    List<MovieType> movieList;
 
     public UserMovieRating(JSONClass object){
         this.setAge(object.getAge());
         this.setGender(object.getGender());
-        this.setMovieMap(new MovieType(object.getMovie()));
+        this.setMovieList(new MovieType(object.getMovie()));
         this.setOccupation(object.getOccupation());
         this.setUserName(object.getName());
     }
 
-    private void setMovieMap(MovieType movieType) {
-        movieMap=new HashMap<Integer, MovieType>();
-        movieMap.put(movieType.getMovie_id(),movieType);
+    private void setMovieList(MovieType movieType) {
+        movieList=new ArrayList<MovieType>();
+        movieList.add(movieType);
     }
 
     public String getUserName() {

@@ -4,15 +4,14 @@ import com.bjtu.dz.bean.JSONClass;
 import com.bjtu.dz.bean.Movie;
 import com.bjtu.dz.bean.MovieType;
 import com.bjtu.dz.bean.UserMovieRating;
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.Session;
+import com.datastax.driver.core.*;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.core.querybuilder.Update;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class CassandraConnect {
                         "gender varchar," +
                         "age int," +
                         "occupation varchar," +
-                        "movie map<int,frozen<movieType>>," +
+                        "movie List<frozen<movieType>>," +
                         "primary key(username)" +
                         ")";
         session.execute(createTableCQL);
@@ -86,6 +85,16 @@ public class CassandraConnect {
 //
 //        session.execute(insert);
 
+    }
+    public void update(JSONClass object) throws Exception{
+        String userName=object.getName();
+        List<MovieType> movieList=new ArrayList<MovieType>();
+        movieList.add(new MovieType(object.getMovie()));
+        BoundStatement  boundStatement =
+                session.prepare("update movieRating.userMovieRating set movie = movie +" +
+                        "? where userName = '"+userName+"'")
+                .bind(movieList);
+        session.execute(boundStatement);
     }
     public void selectAll(){
 

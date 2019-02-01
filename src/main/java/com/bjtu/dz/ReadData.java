@@ -19,6 +19,7 @@ public class ReadData {
             CassandraConnect cc=new CassandraConnect();
 
             float count=0;
+            String lastUser="";
             while ((lineTxt = br.readLine()) != null) {
                 JSONClass jClass=null;
                 try {
@@ -29,8 +30,16 @@ public class ReadData {
                     e.printStackTrace();
                     ErrorSave.save(errorPath,count,"JSONException");
                 }
+
+
                 try {
-                    cc.insert(jClass);
+                    if(lastUser==null || lastUser.equals("")){
+                        lastUser=jClass.getName();
+                        cc.insert(jClass);
+                    }else{
+                        cc.update(jClass);
+                    }
+
                 }catch (Exception e){
                     e.printStackTrace();
                     System.exit(0);

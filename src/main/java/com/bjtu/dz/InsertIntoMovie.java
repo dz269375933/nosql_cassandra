@@ -6,7 +6,7 @@ import com.bjtu.dz.util.StringUtil;
 
 import java.io.*;
 
-public class InsertIntoMovieUser {
+public class InsertIntoMovie {
     public static void main(String[] arg){
         String path="movieUser2.csv";
         String errorPath="error.txt";
@@ -17,10 +17,11 @@ public class InsertIntoMovieUser {
             String lineTxt = null;
 
             CassandraConnect cc=new CassandraConnect();
-            cc.dropTableMovieUser();
-            cc.createTableMovieUser();
+            cc.createTableMovie();
 
             float count=0;
+            boolean flag=true;
+            int lastMovieId=-1;
 
             while ((lineTxt = br.readLine()) != null) {
                 MovieTemp movieTemp=null;
@@ -28,7 +29,17 @@ public class InsertIntoMovieUser {
                 movieTemp=StringUtil.StringToMovieTemp(lineTxt);
 
                 try {
-                    cc.insertMovieUserRating(movieTemp);
+                    if(flag){
+                        flag=false;
+                        lastMovieId=movieTemp.getMovieId();
+                        cc.insertMovie(movieTemp);
+                        continue;
+                    }
+                    if(lastMovieId!=movieTemp.getMovieId()){
+                        cc.insertMovie(movieTemp);
+                        lastMovieId=movieTemp.getMovieId();
+                    }
+
 
                 }catch (Exception e){
                     e.printStackTrace();

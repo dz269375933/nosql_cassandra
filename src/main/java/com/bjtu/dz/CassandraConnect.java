@@ -2,6 +2,8 @@ package com.bjtu.dz;
 
 import com.bjtu.dz.bean.*;
 import com.datastax.driver.core.*;
+import com.datastax.driver.core.querybuilder.Insert;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 
@@ -34,7 +36,8 @@ public class CassandraConnect {
         session.execute(createKeySpaceCQL);
         //create movie type
         String createMovieType="" +
-                "create type if not exists "+keySpace+".movieType(movie_id int,user_rating int,movie_title varchar)";
+                "create type if not exists "+keySpace
+                +".movieType(movie_id int,user_rating int,movie_title varchar)";
         session.execute(createMovieType);
 
 
@@ -77,10 +80,28 @@ public class CassandraConnect {
         session.execute(createTableCQL);
         movieMapper=new MappingManager(session).mapper(MovieUserRating.class);
     }
-    public void insertMovie(MovieTemp object) throws Exception{
+    public void createTableMovie() throws Exception{
+        //create key space
+        String createKeySpaceCQL=
+                "create keyspace if not exists " +keySpace+
+                        " with "
+                        + "replication={'class':'SimpleStrategy','replication_factor':3}";
+        session.execute(createKeySpaceCQL);
+
+        //create column family
+        String createTableCQL =
+                "create table if not exists movieRating.movie(" +
+                        "movie_id int," +
+                        "movie_title varchar," +
+                        "primary key(movie_id)" +
+                        ")";
+        session.execute(createTableCQL);
+    }
+    public void insertMovieUserRating(MovieTemp object) throws Exception{
         movieUserRating=new MovieUserRating(object);
         movieMapper.save(movieUserRating);
     }
+
 //    public void updateMovie(MovieTemp movieTemp) throws Exception{
 //        int movie_id=movieTemp.getMovieId();
 //        BoundStatement  boundStatement =
@@ -153,4 +174,13 @@ public class CassandraConnect {
         cluster.close();
     }
 
+    public void insertMovie(MovieTemp movieTemp) {
+        Insert insert = QueryBuilder.insertInto("movieRating","movie")
+                .value("movie_id",movieTemp.getMovieId())
+                .value("movie_title",movieTemp.getMovieTitle())
+                ;
+
+        session.execute(insert);
+
+    }
 }

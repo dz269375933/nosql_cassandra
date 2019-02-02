@@ -19,9 +19,9 @@ public class CassandraConnect {
     UserMovieRating rating;
 
     public CassandraConnect() throws Exception {
-            //定义cluster类
+            //define cluster class
             cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
-            //需要获取session对象
+            //get session object
             session = cluster.connect();
 
     }
@@ -59,11 +59,10 @@ public class CassandraConnect {
                         " with "
                         + "replication={'class':'SimpleStrategy','replication_factor':3}";
         session.execute(createKeySpaceCQL);
-        //create movie type
-        String createUserType="" +
-                "create type if not exists "+keySpace+".userType(userName varchar,user_rating int,gender varchar," +
-                "occupation varchar,age int)";
-        session.execute(createUserType);
+//        String createUserType="" +
+//                "create type if not exists "+keySpace+".userType(userName varchar,user_rating int,gender varchar," +
+//                "occupation varchar,age int)";
+//        session.execute(createUserType);
 
 
         //create column family
@@ -71,8 +70,9 @@ public class CassandraConnect {
                 "create table if not exists movieRating.movieUserRating(" +
                         "movie_id int," +
                         "movie_title varchar," +
-                        "user List<frozen<userType>>," +
-                        "primary key(movie_id)" +
+                        "userName varchar," +
+                        "rating int," +
+                        "primary key(movie_id,rating,userName)" +
                         ")";
         session.execute(createTableCQL);
         movieMapper=new MappingManager(session).mapper(MovieUserRating.class);
@@ -81,16 +81,14 @@ public class CassandraConnect {
         movieUserRating=new MovieUserRating(object);
         movieMapper.save(movieUserRating);
     }
-    public void updateMovie(MovieTemp movieTemp) throws Exception{
-        int movie_id=movieTemp.getMovieId();
-        List<User> userList=new ArrayList<User>();
-        userList.add(new User(movieTemp));
-        BoundStatement  boundStatement =
-                session.prepare("update movieRating.movieUserRating set user = user +" +
-                        "? where movie_id = "+movie_id)
-                        .bind(userList);
-        session.execute(boundStatement);
-    }
+//    public void updateMovie(MovieTemp movieTemp) throws Exception{
+//        int movie_id=movieTemp.getMovieId();
+//        BoundStatement  boundStatement =
+//                session.prepare("update movieRating.movieUserRating " +
+//                        "set userName = ?,rating = ? where movie_id = "+movie_id)
+//                        .bind(movieTemp.getUserName(),movieTemp.getMovieRating());
+//        session.execute(boundStatement);
+//    }
 
 
     public void insert(JSONClass object) throws Exception{
@@ -133,7 +131,7 @@ public class CassandraConnect {
     }
     public void selectAll(){
 
-            //查询
+            //search
             String queryCQL =
             "select * from movieRating.rating";
             ResultSet rs = session.execute(queryCQL);

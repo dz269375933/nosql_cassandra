@@ -1,9 +1,8 @@
 package com.bjtu.dz;
 
-import com.bjtu.dz.bean.JSONClass;
 import com.bjtu.dz.bean.MovieTemp;
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
+import com.bjtu.dz.util.ErrorSave;
+import com.bjtu.dz.util.StringUtil;
 
 import java.io.*;
 
@@ -22,8 +21,6 @@ public class InsertIntoMovieUser {
             cc.createTableMovieUser();
 
             float count=0;
-            int lastMovie=-1;
-            boolean flag=true;
 
             while ((lineTxt = br.readLine()) != null) {
                 MovieTemp movieTemp=null;
@@ -31,18 +28,7 @@ public class InsertIntoMovieUser {
                 movieTemp=StringUtil.StringToMovieTemp(lineTxt);
 
                 try {
-                    if(flag){
-                        flag=false;
-                        lastMovie=movieTemp.getMovieId();
-                        cc.insertMovie(movieTemp);
-                        continue;
-                    }
-                    if(lastMovie!=movieTemp.getMovieId()){
-                        lastMovie=movieTemp.getMovieId();
-                        cc.insertMovie(movieTemp);
-                    }else{
-                        cc.updateMovie(movieTemp);
-                    }
+                    cc.insertMovie(movieTemp);
 
                 }catch (Exception e){
                     e.printStackTrace();

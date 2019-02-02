@@ -1,7 +1,7 @@
 package com.bjtu.dz;
 
 import com.bjtu.dz.bean.JSONClass;
-import com.bjtu.dz.bean.MovieTemp;
+import com.bjtu.dz.util.ErrorSave;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 

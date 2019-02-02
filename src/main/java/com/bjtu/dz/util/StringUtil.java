@@ -1,4 +1,4 @@
-package com.bjtu.dz;
+package com.bjtu.dz.util;
 
 import com.bjtu.dz.bean.MovieTemp;
 
@@ -15,6 +15,9 @@ public class StringUtil {
                 aimArray[2]=array[2];
                 aimArray[3]=array[3];
                 aimArray[4]="";
+                //There are some "," in "movie title" column
+                //When data save in the csv file,it will be splited by ","
+                // So it will be a big trouble when translate data
                 for(int i=4;i<length-3;i++){
                     if(array[i].indexOf("\"")>=0)
                     aimArray[4]+=array[i].substring(0,array[i].lastIndexOf("\""));
@@ -23,7 +26,6 @@ public class StringUtil {
                 aimArray[4]+=array[length-3];
                 aimArray[5]=array[length-2];
                 aimArray[6]=array[length-1];
-
                 array=aimArray;
             }
             String ageString=array[0].substring(array[0].indexOf(":")+1,array[0].lastIndexOf("\""));

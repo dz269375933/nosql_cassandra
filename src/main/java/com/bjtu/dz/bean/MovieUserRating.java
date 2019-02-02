@@ -15,14 +15,17 @@ public class MovieUserRating {
     @Column(name = "movie_title")
     String movie_title;
 
-    @Column(name = "user")
-    List<User> userList;
+    @Column(name = "userName")
+    String userName;
+    @Column(name = "rating")
+    int rating;
+
 
     public MovieUserRating(MovieTemp movieTemp){
         this.movie_id=movieTemp.getMovieId();
         this.movie_title=movieTemp.getMovieTitle();
-        userList=new ArrayList<User>();
-        userList.add(new User(movieTemp));
+        this.userName=movieTemp.getUserName();
+        this.rating=movieTemp.getMovieRating();
     }
 
     public int getMovie_id() {
@@ -41,12 +44,22 @@ public class MovieUserRating {
         this.movie_title = movie_title;
     }
 
-    public List<User> getUserList() {
-        return userList;
+
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
 
 }

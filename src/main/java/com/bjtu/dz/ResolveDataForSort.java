@@ -2,6 +2,7 @@ package com.bjtu.dz;
 
 import com.bjtu.dz.bean.JSONClass;
 import com.bjtu.dz.bean.MovieTemp;
+import com.bjtu.dz.util.ErrorSave;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
@@ -21,9 +22,10 @@ public class ResolveDataForSort {
             float count=0;
             MovieTemp movieTemp;
 
+            //Read data from movieUser.csv
+            //after this,I sort movieId in csv file
             FileWriter fileWriter = null;
             try {
-                //如果文件存在，则追加内容；如果文件不存在，则创建文件
                 File f=new File("movieUser.csv");
                 fileWriter = new FileWriter(f, true);
             } catch (IOException e) {

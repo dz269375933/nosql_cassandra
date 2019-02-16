@@ -1,4 +1,4 @@
-package com.bjtu.dz;
+package com.bjtu.dz.cassandra;
 
 import java.io.File;
 import java.io.FileWriter;

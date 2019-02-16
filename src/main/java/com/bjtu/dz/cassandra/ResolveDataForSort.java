@@ -1,4 +1,4 @@
-package com.bjtu.dz;
+package com.bjtu.dz.cassandra;
 
 import com.bjtu.dz.bean.JSONClass;
 import com.bjtu.dz.bean.MovieTemp;

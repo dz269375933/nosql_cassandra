@@ -1,14 +1,18 @@
-package com.bjtu.dz;
+package com.bjtu.dz.mongo;
 
-import com.bjtu.dz.bean.MovieTemp;
+import com.bjtu.dz.bean.JSONClass;
+import com.bjtu.dz.cassandra.CassandraConnect;
 import com.bjtu.dz.util.ErrorSave;
-import com.bjtu.dz.util.StringUtil;
+import com.bjtu.dz.util.MongoDB;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 import java.io.*;
 
-public class InsertIntoMovieUser {
+public class Main {
     public static void main(String[] arg){
-        String path="movieUser2.csv";
+
+        String path="MovieLens_ratingUsers.json";
         String errorPath="error.txt";
         try {
             BufferedReader br=new BufferedReader(
@@ -16,27 +20,20 @@ public class InsertIntoMovieUser {
             );
             String lineTxt = null;
 
-            CassandraConnect cc=new CassandraConnect();
-            cc.dropTableMovieUser();
-            cc.createTableMovieUser();
-
             float count=0;
-
+            MongoDB mongo=new MongoDB();
             while ((lineTxt = br.readLine()) != null) {
-                MovieTemp movieTemp=null;
-                System.out.println((count++)/10002+"%");
-                movieTemp=StringUtil.StringToMovieTemp(lineTxt);
-
+                JSONClass jClass=null;
                 try {
-                    cc.insertMovieUserRating(movieTemp);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                    ErrorSave.save(errorPath,count,"cassandraError");
+                    System.out.println((count++)/10002+"%");
+                    JSONObject jsonObject=JSONObject.fromObject(lineTxt);
+                    jClass=(JSONClass)JSONObject.toBean(jsonObject, JSONClass.class);
+                    mongo.insertOne(jClass);
+                }catch (JSONException e){
+                    ErrorSave.save(errorPath,count,"JSONException");
                 }
             }
             //end while loop
-            cc.exit();
             System.out.println("success");
             br.close();
         } catch (IOException e) {
@@ -46,7 +43,6 @@ public class InsertIntoMovieUser {
             e.printStackTrace();
             System.exit(0);
         }
-
 
     }
 }

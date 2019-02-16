@@ -1,15 +1,14 @@
-package com.bjtu.dz;
+package com.bjtu.dz.cassandra;
 
-import com.bjtu.dz.bean.JSONClass;
+import com.bjtu.dz.bean.MovieTemp;
 import com.bjtu.dz.util.ErrorSave;
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
+import com.bjtu.dz.util.StringUtil;
 
 import java.io.*;
 
-public class InsertIntoUserMovie {
+public class InsertIntoMovie {
     public static void main(String[] arg){
-        String path="MovieLens_ratingUsers.json";
+        String path="movieUser2.csv";
         String errorPath="error.txt";
         try {
             BufferedReader br=new BufferedReader(
@@ -18,37 +17,29 @@ public class InsertIntoUserMovie {
             String lineTxt = null;
 
             CassandraConnect cc=new CassandraConnect();
-            cc.dropTableUserMovie();
-            cc.createTableUserMovie();
+            cc.createTableMovie();
 
             float count=0;
-            String lastUser="";
             boolean flag=true;
+            int lastMovieId=-1;
 
             while ((lineTxt = br.readLine()) != null) {
-                JSONClass jClass=null;
-                try {
-                    System.out.println((count++)/10002+"%");
-                    JSONObject jsonObject=JSONObject.fromObject(lineTxt);
-                    jClass=(JSONClass)JSONObject.toBean(jsonObject, JSONClass.class);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                    ErrorSave.save(errorPath,count,"JSONException");
-                }
+                MovieTemp movieTemp=null;
+                System.out.println((count++)/10002+"%");
+                movieTemp=StringUtil.StringToMovieTemp(lineTxt);
 
                 try {
                     if(flag){
                         flag=false;
-                        lastUser=jClass.getName();
-                        cc.insert(jClass);
+                        lastMovieId=movieTemp.getMovieId();
+                        cc.insertMovie(movieTemp);
                         continue;
                     }
-                    if(!lastUser.equals(jClass.getName())){
-                        lastUser=jClass.getName();
-                        cc.insert(jClass);
-                    }else{
-                        cc.update(jClass);
+                    if(lastMovieId!=movieTemp.getMovieId()){
+                        cc.insertMovie(movieTemp);
+                        lastMovieId=movieTemp.getMovieId();
                     }
+
 
                 }catch (Exception e){
                     e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.bjtu.dz;
+package com.bjtu.dz.cassandra;
 
 import com.bjtu.dz.bean.*;
 import com.datastax.driver.core.*;

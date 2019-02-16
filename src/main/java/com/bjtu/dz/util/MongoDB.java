@@ -35,8 +35,7 @@ public class MongoDB {
         }
     }
     public void insertOne(JSONClass jClass){
-        Document document = new Document("title", "MongoDB").
-                append("username", jClass.getName()).
+        Document document = new Document("username", jClass.getName()).
                 append("gender", jClass.getGender()).
                 append("age", jClass.getAge()).
                 append("occupation", jClass.getOccupation()).

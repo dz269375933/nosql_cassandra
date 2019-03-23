@@ -16,10 +16,10 @@ public class MongoDB {
 
     public MongoDB() {
         try {
-            // 连接到 mongodb 服务
+            // connect to mongodb service
             mongoClient = new MongoClient("localhost", 27017);
 
-            // 连接到数据库
+            // connect to mongodb
             MongoDatabase mongoDatabase = mongoClient.getDatabase("nosql");
             System.out.println("Connect to database successfully");
             try {

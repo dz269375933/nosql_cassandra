@@ -35,7 +35,6 @@ public class Movie {
     }
 
     public void setTitle(String title) {
-        title.replaceAll("'","\\\'");
         this.title = title;
     }
 

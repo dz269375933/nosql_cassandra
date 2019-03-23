@@ -9,7 +9,6 @@ public class ErrorSave {
     public static void save(String errorPath,float column,String errorName){
         FileWriter fw = null;
         try {
-            //如果文件存在，则追加内容；如果文件不存在，则创建文件
             File f=new File(errorPath);
             fw = new FileWriter(f, true);
         } catch (IOException e) {
